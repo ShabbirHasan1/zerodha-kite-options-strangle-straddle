@@ -1,0 +1,140 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="content-wrapper">
+    <!-- Content Header (Page header) -->
+    <div class="content-header">
+        <div class="container-fluid">
+            <div class="col-md-6">
+                <!-- general form elements -->
+                <div class="card card-primary">
+                    <div class="card-header">
+                        <h3 class="card-title">Create Strategy</h3>
+                    </div>
+                    <!-- /.card-header -->
+                    <!-- form start -->
+                    <form method='POST'>
+                        {% csrf_token %}
+                        {% if messages %}
+                            {% for message in messages %}
+                                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% endif %}">
+                                {{ message }}<button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                <span aria-hidden="true">&times;</span></button></div>
+                            {% endfor %}
+                        {% endif %}
+                        <div class="card-body">
+                            <div class="form-group">
+                                {{ form.name.label_tag }}
+                                {{ form.name }}
+                                {% for error in form.name.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.underlying.label_tag }}
+                                {{ form.underlying }}
+                                {% for error in form.underlying.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.strategy.label_tag }}
+                                {{ form.strategy }}
+                                {% for error in form.strategy.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.difference.label_tag }}
+                                {{ form.difference }}
+                                {% for error in form.difference.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    {{ form.entry_time.label_tag }}
+              
+                                    <div class="input-group date" id="{{ form.entry_time.id_for_label }}" data-target-input="nearest">
+                                        {{ form.entry_time }}
+                                        <div class="input-group-append" data-target="#{{ form.entry_time.id_for_label }}" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                    </div>
+                                    {% for error in form.entry_time.errors %}
+                                        <p>{{ error|escape }}<p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="bootstrap-timepicker">
+                                <div class="form-group">
+                                    {{ form.exit_time.label_tag }}
+              
+                                    <div class="input-group date" id="{{ form.exit_time.id_for_label  }}" data-target-input="nearest">
+                                        {{ form.exit_time }}
+                                        <div class="input-group-append" data-target="#{{ form.exit_time.id_for_label  }}" data-toggle="datetimepicker">
+                                            <div class="input-group-text"><i class="far fa-clock"></i></div>
+                                        </div>
+                                    </div>
+                                    {% for error in form.exit_time.errors %}
+                                        <p>{{ error|escape }}<p>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.stop_loss_type.label_tag }}
+                                {{ form.stop_loss_type }}
+                                {% for error in form.stop_loss_type.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-group">
+                                {{ form.stop_loss.label_tag }}
+                                {{ form.stop_loss }}
+                                {% for error in form.stop_loss.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            
+                            <div class="form-check">
+                                {{ form.move_sl_to_cost }}
+                                <label class="form-check-label" for="{{ form.move_sl_to_cost.id_for_label }}">{{ form.move_sl_to_cost.label }}</label>
+                                {% for error in form.move_sl_to_cost.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                            <div class="form-check">
+                                {{ form.active }}
+                                <label class="form-check-label" for="{{ form.active.id_for_label }}">{{ form.active.label }}</label>
+                                {% for error in form.active.errors %}
+                                    <p>{{ error|escape }}<p>
+                                {% endfor %}
+                            </div>
+                        </div>
+                        <!-- /.card-body -->
+
+                        <div class="card-footer">
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock content %}
+
+{% block customscript %}
+<script>
+    $(function () {
+        //Timepicker
+        $('#{{ form.entry_time.id_for_label }}').datetimepicker({
+          format: 'LT'
+        })
+
+        $('#{{ form.exit_time.id_for_label }}').datetimepicker({
+            format: 'LT'
+          })
+    })
+</script>
+{% endblock customscript %}

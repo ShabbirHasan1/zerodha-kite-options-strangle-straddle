@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.utils.translation import gettext as _
 from kiteconnect import KiteConnect
 from django.contrib.auth import get_user_model
+from django.urls import reverse
 
 
 class Order(models.Model):
@@ -180,6 +181,9 @@ class Strategy(models.Model):
 
     def __str__(self):
         return self.name
+    
+    def get_absolute_url(self):
+        return reverse("strategy_update", kwargs={"pk": self.pk})
     
     class Meta:
         verbose_name_plural = "strategies"
